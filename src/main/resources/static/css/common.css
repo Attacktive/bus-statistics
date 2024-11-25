@@ -1,0 +1,14 @@
+table {
+	border-spacing: 0;
+}
+
+th, td {
+	border-style: solid;
+	border-width: thin;
+	border-collapse: collapse;
+}
+
+pre {
+	background-color: lightgray;
+	white-space: pre-wrap;
+}

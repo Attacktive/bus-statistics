@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bus Positions</title>
+	<link rel="stylesheet" href="/css/bus-arrivals.css">
+</head>
+<body>
+	Bus positions:
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Section #</th>
+				<th>Plate #</th>
+				<th>X</th>
+				<th>Y</th>
+				<th>Last station ID</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="busPosition, iteration : ${busPositions}">
+				<td th:text="${busPosition.sectOrd}"></td>
+				<td th:text="${busPosition.plainNo}"></td>
+				<td th:text="${busPosition.posX}"></td>
+				<td th:text="${busPosition.posY}"></td>
+				<td th:text="${busPosition.lastStnId}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<p></p>
+	raw data:
+	<pre th:text="${busPositions}"></pre>
+</body>
+</html>

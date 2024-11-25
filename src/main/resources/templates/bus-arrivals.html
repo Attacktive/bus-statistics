@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bus Arrivals</title>
+	<link rel="stylesheet" href="/css/bus-positions.css">
+</head>
+<body>
+	Bus arrivals:
+	<table>
+		<tr>
+			<th>Station ID</th>
+			<td th:text="${busArrivals.stId}"></td>
+		</tr>
+		<tr>
+			<th>Station name</th>
+			<td th:text="${busArrivals.stNm}"></td>
+		</tr>
+		<tr>
+			<th>Bus route ID</th>
+			<td th:text="${busArrivals.busRouteId}"></td>
+		</tr>
+		<tr>
+			<th>Bus route name</th>
+			<td th:text="${busArrivals.busRouteAbrv + ' (' + busArrivals.rtNm + ')'}"></td>
+		</tr>
+		<tr>
+			<th>The first</th>
+			<td th:text="${busArrivals.firstTmFormatted}"></td>
+		</tr>
+		<tr>
+			<th>The last</th>
+			<td th:text="${busArrivals.lastTmFormatted}"></td>
+		</tr>
+		<tr>
+			<th>Data provided at</th>
+			<td th:text="${busArrivals.mkTmFormatted}"></td>
+		</tr>
+		<tr>
+			<th>The next bus arrives in</th>
+			<td th:if="${busArrivals.sectOrd1 == '0'}">N/A</td>
+			<td th:unless="${busArrivals.sectOrd1 == '0'}" th:text="${busArrivals.arrival1Eta + ' (' + busArrivals.arrival1RemainingStops + ' stops)'}"></td>
+		</tr>
+		<tr>
+			<th>The 2nd next bus arrives in</th>
+			<td th:if="${busArrivals.sectOrd2 == '0'}">N/A</td>
+			<td th:unless="${busArrivals.sectOrd2 == '0'}" th:text="${busArrivals.arrival2Eta + ' (' + busArrivals.arrival2RemainingStops + ' stops)'}"></td>
+		</tr>
+	</table>
+	<p></p>
+	raw data:
+	<pre th:text="${busArrivals}"></pre>
+</body>
+</html>

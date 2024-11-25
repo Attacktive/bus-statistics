@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: 'bus-statistics'
+
+app:
+  service-key: "${SERVICE_KEY:}"

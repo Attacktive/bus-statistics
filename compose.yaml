@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: 'postgres'
+    environment:
+      - 'POSTGRES_DB=bus-statistics'
+      - 'POSTGRES_USER=attacktive'
+      - 'POSTGRES_PASSWORD=attacktive'
+    ports:
+      - '5432:5432'
