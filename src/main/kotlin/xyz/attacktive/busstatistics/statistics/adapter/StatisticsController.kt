@@ -8,11 +8,25 @@ import org.springframework.web.bind.annotation.RequestParam
 import xyz.attacktive.busstatistics.configuration.AppConfigurationProperties
 import xyz.attacktive.busstatistics.statistics.domain.BusArrivalRequest
 import xyz.attacktive.busstatistics.statistics.domain.BusPositionRequest
+import xyz.attacktive.busstatistics.statistics.domain.BusRouteRequest
 import xyz.attacktive.busstatistics.statistics.port.StatisticsUseCase
 
 @Controller
 @RequestMapping("busses")
 class StatisticsController(private val appConfigurationProperties: AppConfigurationProperties, private val statisticsUseCase: StatisticsUseCase) {
+	@GetMapping
+	fun getMain() = "main"
+
+	@GetMapping("route")
+	fun getBusRoute(@RequestParam busRouteId: String, model: Model): String {
+		val busRouteRequest = BusRouteRequest(serviceKey = appConfigurationProperties.serviceKey, busRouteId = busRouteId)
+
+		val busRoute = statisticsUseCase.getBusRoute(busRouteRequest)
+		model.addAttribute("busRoute", busRoute)
+
+		return "bus-route"
+	}
+
 	@GetMapping("positions")
 	fun getBusPositions(@RequestParam busRouteId: String, @RequestParam startOrd: Int = 1, @RequestParam endOrd: Int = Int.MAX_VALUE, model: Model): String {
 		val busPositionRequest = BusPositionRequest(

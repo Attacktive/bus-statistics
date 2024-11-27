@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bus Route</title>
+	<link rel="stylesheet" href="/css/bus-arrivals.css">
+</head>
+<body>
+	<div th:text="${'Bus route ID: ' + busRoute.id}"></div>
+	<div th:text="${'But route name: ' + busRoute.name}"></div>
+	<table>
+		<thead>
+			<tr>
+				<th>Sequence</th>
+				<th>Station ID</th>
+				<th>Station number</th>
+				<th>Station name</th>
+				<th>Section</th>
+				<th>Direction</th>
+				<th>Distance to the next station</th>
+				<th>Average speed</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="station : ${busRoute.stations}">
+				<td th:text="${station.seq}"></td>
+				<td th:text="${station.station}"></td>
+				<td th:text="${station.stationNo}"></td>
+				<td th:text="${station.stationNm}"></td>
+				<td th:text="${station.section}"></td>
+				<td th:text="${station.direction}"></td>
+				<td th:text="${station.fullSectDist}"></td>
+				<td th:text="${station.sectSpd}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<p></p>
+	raw data:
+	<pre th:text="${busRoute}"></pre>
+</body>
+</html>

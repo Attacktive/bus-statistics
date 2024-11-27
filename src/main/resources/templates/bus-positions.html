@@ -20,6 +20,7 @@
 		</thead>
 		<tbody>
 			<tr th:each="busPosition, iteration : ${busPositions}">
+				<td th:text="${iteration.count}"></td>
 				<td th:text="${busPosition.sectOrd}"></td>
 				<td th:text="${busPosition.plainNo}"></td>
 				<td th:text="${busPosition.posX}"></td>
