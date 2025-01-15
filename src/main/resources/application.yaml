@@ -1,6 +1,11 @@
 spring:
   application:
     name: 'bus-statistics'
+  datasource:
+    driver-class-name: 'org.postgresql.Driver'
+    url: 'jdbc:postgresql://localhost:5432/bus-statistics'
+    username: 'attacktive'
+    password: 'attacktive'
 
 app:
   service-key: "${SERVICE_KEY:}"

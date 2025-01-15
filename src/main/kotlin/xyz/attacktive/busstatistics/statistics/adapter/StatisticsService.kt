@@ -54,7 +54,7 @@ class StatisticsService(private val restClient: RestClient): StatisticsUseCase {
 			.safeItems
 	}
 
-	override fun getBusArrivals(busArrivalRequest: BusArrivalRequest): BusArrivalResponse? {
+	override fun getBusArrivals(busArrivalRequest: BusArrivalRequest): List<BusArrivalResponse> {
 		logger.info { "trying to request /arrive/getArrInfoByRoute with $busArrivalRequest" }
 
 		val response = restClient.get()
@@ -67,6 +67,6 @@ class StatisticsService(private val restClient: RestClient): StatisticsUseCase {
 			.body(object: ParameterizedTypeReference<ApiResponse<BusArrivalResponse>>() {})
 			?: throw IllegalStateException("Failed to get bus arrivals")
 
-		return response.safeFirstItem
+		return response.safeItems
 	}
 }
