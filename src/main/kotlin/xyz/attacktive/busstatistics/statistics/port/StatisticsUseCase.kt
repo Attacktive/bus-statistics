@@ -12,5 +12,5 @@ interface StatisticsUseCase {
 
 	fun getBusPositions(busPositionRequest: BusPositionRequest): List<BusPositionResponse>
 
-	fun getBusArrivals(busArrivalRequest: BusArrivalRequest): BusArrivalResponse?
+	fun getBusArrivals(busArrivalRequest: BusArrivalRequest): List<BusArrivalResponse>
 }
