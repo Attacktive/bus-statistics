@@ -5,7 +5,7 @@ data class ApiResponse<T>(private val comMsgHeader: CommonMessageHeader, private
 	data class MessageHeader(private val headerMsg: String, val headerCd: String, private val itemCount: Int)
 	data class MessageBody<T>(val itemList: List<T>?)
 
-	val isSuccessful = (msgHeader.headerCd == "0")
+	val isSuccessful = msgHeader.headerCd == "0"
 	val items = msgBody.itemList
 	val safeItems = items ?: emptyList()
 	val safeFirstItem = if (safeItems.isEmpty()) {
