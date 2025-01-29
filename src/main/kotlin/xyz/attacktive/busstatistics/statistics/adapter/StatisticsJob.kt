@@ -1,11 +1,14 @@
 package xyz.attacktive.busstatistics.statistics.adapter
 
+import java.time.LocalDateTime
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.springframework.stereotype.Component
 import xyz.attacktive.busstatistics.configuration.AppConfigurationProperties
+import xyz.attacktive.busstatistics.statistics.adapter.table.ActualArrivalTable
 import xyz.attacktive.busstatistics.statistics.adapter.table.BusArrivalTable
 import xyz.attacktive.busstatistics.statistics.adapter.table.BusPositionTable
 import xyz.attacktive.busstatistics.statistics.domain.BusArrivalRequest
@@ -43,11 +46,22 @@ class StatisticsJob(private val appConfigurationProperties: AppConfigurationProp
 		}
 
 		transaction {
-			/*
-			 * TODO: select records from BusArrivalTable
-			 *  where its creation time (mk_tm) is not older than x minutes and
-			 *  doesn't exist in <the new table>
-			 */
+			SchemaUtils.create(ActualArrivalTable)
+
+			BusArrivalTable.select(BusArrivalTable.vehId1, BusArrivalTable.exps1, BusArrivalTable.mkTm)
+				.where {
+					(BusArrivalTable.vehId1 notInSubQuery (ActualArrivalTable.select(ActualArrivalTable.vehicleId))) and
+						(BusArrivalTable.mkTm greater (LocalDateTime.now().minusHours(1)))
+				}.forEach {
+					val remainingSeconds = it[BusArrivalTable.exps1].toLong()
+					val retrievalDateTime = it[BusArrivalTable.mkTm]
+
+					val estimatedArrivalDateTime = retrievalDateTime.plusSeconds(remainingSeconds)
+
+					ActualArrivalTable.insertActualArrival(it[BusArrivalTable.vehId1], estimatedArrivalDateTime)
+				}
+
+			// TODO: update actual arrival date-time
 		}
 	}
 }

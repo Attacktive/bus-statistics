@@ -26,7 +26,7 @@ class SchedulingConfigurations {
 			.forJob(jobDetail)
 			.withIdentity(TriggerKey.triggerKey("Qrtz_Trigger_Detail"))
 			.withDescription("Sample Trigger")
-			.withSchedule(CronScheduleBuilder.cronSchedule(appConfigurationProperties.cronExpression))
+			.withSchedule(CronScheduleBuilder.cronSchedule(appConfigurationProperties.scheduleCronExpression))
 			.build()
 
 		schedulerFactoryBean.scheduler.scheduleJob(jobDetail, trigger)
