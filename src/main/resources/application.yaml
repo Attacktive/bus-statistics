@@ -9,3 +9,5 @@ spring:
 
 app:
   service-key: "${SERVICE_KEY:}"
+  bus-route-id: "${BUS_ROUTE_ID:}"
+  st-id: "${ST_ID:}"
