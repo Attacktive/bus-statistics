@@ -2,10 +2,8 @@ package xyz.attacktive.busstatistics.statistics.domain
 
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
-import kotlinx.serialization.Serializable
 import xyz.attacktive.busstatistics.configuration.DateTimeSerializer
 
-@Serializable(with = DateTimeSerializer::class)
 data class BusArrivalResponse(
 	/**
 	 * 정류소 고유 ID
@@ -492,7 +490,7 @@ data class BusArrivalResponse(
 	val deTourAt: String
 ) {
 	companion object {
-		fun digitOnlyRepresentationToLocalDateTime(literal: String?) = literal?.let { DateTimeSerializer.digitOnlyFormatter.parse(it) }
+		fun digitOnlyRepresentationToLocalDateTime(literal: String?) = literal?.let { DateTimeSerializer.digitOnlyFormatter.parse("${it}0000") }
 
 		fun rfc3339LikeRepresentationToLocalDateTime(literal: String?) = literal?.let { DateTimeSerializer.rfc3339LikeFormatter.parse(it) }
 	}

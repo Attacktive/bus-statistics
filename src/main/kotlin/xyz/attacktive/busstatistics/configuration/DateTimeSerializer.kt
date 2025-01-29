@@ -2,17 +2,13 @@ package xyz.attacktive.busstatistics.configuration
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format.char
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@OptIn(ExperimentalSerializationApi::class)
-@Serializer(forClass = LocalDateTime::class)
 object DateTimeSerializer: KSerializer<LocalDateTime> {
 	override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(LocalDateTime::class.qualifiedName!!, PrimitiveKind.STRING)
 
