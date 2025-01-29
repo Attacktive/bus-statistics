@@ -11,7 +11,6 @@ object BusArrivalTable: Table("bus_arrival") {
 	val busRouteId = varchar("bus_route_id", 50)
 	val stationId = varchar("station_id", 50)
 	val stationSequence = integer("station_sequence")
-	val timestamp = datetime("timestamp")
 	val stId = varchar("st_id", 50)
 	val stNm = varchar("st_nm", 100)
 	val arsId = varchar("ars_id", 50)
@@ -85,6 +84,7 @@ object BusArrivalTable: Table("bus_arrival") {
 	val nmain2Stnid2 = varchar("nmain2_stnid2", 50)
 	val nmain2Ord2 = varchar("nmain2_ord2", 10)
 	val nmain2Sec2 = varchar("nmain2_sec2", 10)
+	val timestamp = datetime("timestamp")
 
 	override val primaryKey = PrimaryKey(id)
 
@@ -99,7 +99,6 @@ object BusArrivalTable: Table("bus_arrival") {
 			it[this.busRouteId] = busRouteId
 			it[this.stationId] = stationId
 			it[this.stationSequence] = stationSequence
-			it[this.timestamp] = timestamp
 			it[stId] = arrival.stId
 			it[stNm] = arrival.stNm
 			it[arsId] = arrival.arsId
@@ -173,6 +172,7 @@ object BusArrivalTable: Table("bus_arrival") {
 			it[nmain2Stnid2] = arrival.nmain2Stnid2
 			it[nmain2Ord2] = arrival.nmain2Ord2
 			it[nmain2Sec2] = arrival.namin2Sec2
+			it[this.timestamp] = timestamp
 		}
 	}
 }
