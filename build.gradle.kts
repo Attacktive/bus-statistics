@@ -32,7 +32,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin", "kotlin-reflect")
 	implementation("org.jetbrains.exposed", "exposed-core", "0.58.0")
 	implementation("org.jetbrains.exposed", "exposed-dao", "0.58.0")
-	implementation("org.jetbrains.exposed", "exposed-java-time", "0.58.0")
+	implementation("org.jetbrains.exposed", "exposed-kotlin-datetime", "0.58.0")
 	implementation("org.jetbrains.exposed", "exposed-jdbc", "0.58.0")
 	implementation("org.jetbrains.exposed", "exposed-spring-boot-starter", "0.58.0")
 	implementation("org.jetbrains.kotlinx", "kotlinx-datetime-jvm", "0.6.1")

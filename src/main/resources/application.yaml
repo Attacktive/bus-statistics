@@ -11,3 +11,4 @@ app:
   service-key: "${SERVICE_KEY:}"
   bus-route-id: "${BUS_ROUTE_ID:}"
   st-id: "${ST_ID:}"
+  cron-expression: "${CRON_EXPRESSION:0 * 8,9 * * ?}"

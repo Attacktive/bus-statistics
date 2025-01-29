@@ -1,9 +1,8 @@
 package xyz.attacktive.busstatistics.statistics.adapter.table
 
-import java.time.LocalDateTime
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.javatime.datetime
+import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import xyz.attacktive.busstatistics.statistics.domain.BusArrivalResponse
 
 object BusArrivalTable: Table("bus_arrival") {
@@ -21,7 +20,7 @@ object BusArrivalTable: Table("bus_arrival") {
 	val nextBus = varchar("next_bus", 1)
 	val staOrd = varchar("sta_ord", 10)
 	val dir = varchar("dir", 100)
-	val mkTm = varchar("mk_tm", 50)
+	val mkTm = datetime("mk_tm")
 	val vehId1 = varchar("veh_id1", 50)
 	val plainNo1 = varchar("plain_no1", 50)
 	val sectOrd1 = varchar("sect_ord1", 10)
@@ -84,7 +83,6 @@ object BusArrivalTable: Table("bus_arrival") {
 	val nmain2Stnid2 = varchar("nmain2_stnid2", 50)
 	val nmain2Ord2 = varchar("nmain2_ord2", 10)
 	val nmain2Sec2 = varchar("nmain2_sec2", 10)
-	val timestamp = datetime("timestamp")
 
 	override val primaryKey = PrimaryKey(id)
 
@@ -92,8 +90,7 @@ object BusArrivalTable: Table("bus_arrival") {
 		busRouteId: String,
 		stationId: String,
 		stationSequence: Int,
-		arrival: BusArrivalResponse,
-		timestamp: LocalDateTime = LocalDateTime.now()
+		arrival: BusArrivalResponse
 	) {
 		insert {
 			it[this.busRouteId] = busRouteId
@@ -109,7 +106,7 @@ object BusArrivalTable: Table("bus_arrival") {
 			it[nextBus] = arrival.nextBus
 			it[staOrd] = arrival.staOrd
 			it[dir] = arrival.dir
-			it[mkTm] = arrival.mkTm
+			it[mkTm] = arrival.mkTmDateTime
 			it[vehId1] = arrival.vehId1
 			it[plainNo1] = arrival.plainNo1
 			it[sectOrd1] = arrival.sectOrd1
@@ -172,7 +169,6 @@ object BusArrivalTable: Table("bus_arrival") {
 			it[nmain2Stnid2] = arrival.nmain2Stnid2
 			it[nmain2Ord2] = arrival.nmain2Ord2
 			it[nmain2Sec2] = arrival.namin2Sec2
-			it[this.timestamp] = timestamp
 		}
 	}
 }
