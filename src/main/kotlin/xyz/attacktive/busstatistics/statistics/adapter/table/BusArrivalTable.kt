@@ -1,8 +1,9 @@
 package xyz.attacktive.busstatistics.statistics.adapter.table
 
+import kotlinx.datetime.toJavaLocalDateTime
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.kotlin.datetime.datetime
+import org.jetbrains.exposed.sql.javatime.datetime
 import xyz.attacktive.busstatistics.statistics.domain.BusArrivalResponse
 
 object BusArrivalTable: Table("bus_arrival") {
@@ -86,12 +87,7 @@ object BusArrivalTable: Table("bus_arrival") {
 
 	override val primaryKey = PrimaryKey(id)
 
-	fun insertArrival(
-		busRouteId: String,
-		stationId: String,
-		stationSequence: Int,
-		arrival: BusArrivalResponse
-	) {
+	fun insertArrival(busRouteId: String, stationId: String, stationSequence: Int, arrival: BusArrivalResponse) {
 		insert {
 			it[this.busRouteId] = busRouteId
 			it[this.stationId] = stationId
@@ -106,7 +102,7 @@ object BusArrivalTable: Table("bus_arrival") {
 			it[nextBus] = arrival.nextBus
 			it[staOrd] = arrival.staOrd
 			it[dir] = arrival.dir
-			it[mkTm] = arrival.mkTmDateTime
+			it[mkTm] = arrival.mkTmDateTime.toJavaLocalDateTime()
 			it[vehId1] = arrival.vehId1
 			it[plainNo1] = arrival.plainNo1
 			it[sectOrd1] = arrival.sectOrd1

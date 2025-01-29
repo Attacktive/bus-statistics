@@ -1,8 +1,9 @@
 package xyz.attacktive.busstatistics.statistics.adapter.table
 
+import kotlinx.datetime.toJavaLocalDateTime
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.kotlin.datetime.datetime
+import org.jetbrains.exposed.sql.javatime.datetime
 import xyz.attacktive.busstatistics.statistics.domain.BusPositionResponse
 
 object BusPositionTable: Table("bus_position") {
@@ -34,7 +35,7 @@ object BusPositionTable: Table("bus_position") {
 			it[sectDist] = position.sectDist
 			it[stopFlag] = position.stopFlag
 			it[sectionId] = position.sectionId
-			it[dataTm] = position.dataTmDateTime
+			it[dataTm] = position.dataTmDateTime.toJavaLocalDateTime()
 			it[tmX] = position.tmX
 			it[tmY] = position.tmY
 			it[vehId] = position.vehId

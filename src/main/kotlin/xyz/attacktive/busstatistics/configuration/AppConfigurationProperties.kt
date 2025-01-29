@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.bind.ConstructorBinding
 
 @ConfigurationProperties(prefix = "app")
-data class AppConfigurationProperties @ConstructorBinding constructor(val serviceKey: String, val busRouteId: String, val stId: String, val cronExpression: String) {
+data class AppConfigurationProperties @ConstructorBinding constructor(val serviceKey: String, val busRouteId: String, val stId: String, val scheduleCronExpression: String) {
 	@PostConstruct
 	fun validateServiceKey() {
 		if (serviceKey.isEmpty()) {
