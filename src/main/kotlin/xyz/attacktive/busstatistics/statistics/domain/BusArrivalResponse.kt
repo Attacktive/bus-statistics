@@ -38,13 +38,11 @@ data class BusArrivalResponse(
 	/**
 	 * 첫차시간
 	 */
-	@Transient
 	val firstTm: String,
 
 	/**
 	 * 막차시간
 	 */
-	@Transient
 	val lastTm: String,
 
 	/**
@@ -75,7 +73,6 @@ data class BusArrivalResponse(
 	/**
 	 * 제공시각
 	 */
-	@Transient
 	val mkTm: String,
 
 	/**
@@ -489,19 +486,25 @@ data class BusArrivalResponse(
 	 */
 	val deTourAt: String
 ) {
-	companion object {
-		fun digitOnlyRepresentationToLocalDateTime(literal: String?) = literal?.let { DateTimeSerializer.digitOnlyFormatter.parse("${it}0000") }
-
-		fun rfc3339LikeRepresentationToLocalDateTime(literal: String?) = literal?.let { DateTimeSerializer.rfc3339LikeFormatter.parse(it) }
-	}
-
-	val firstTmFormatted = digitOnlyRepresentationToLocalDateTime(firstTm)
-	val lastTmFormatted = digitOnlyRepresentationToLocalDateTime(lastTm)
-	val mkTmFormatted = rfc3339LikeRepresentationToLocalDateTime(mkTm)
+	val firstTmDateTime = parseDigitOnlyRepresentation(firstTm)
+	val lastTmDateTime = parseDigitOnlyRepresentation(lastTm)
+	val mkTmDateTime = DateTimeSerializer.rfc3339LikeFormatter.parse(mkTm)
 
 	val arrival1Eta = traTime1.toInt().toDuration(DurationUnit.SECONDS).toString()
 	val arrival1RemainingStops = nstnOrd1.toInt()
 
 	val arrival2Eta = traTime2.toInt().toDuration(DurationUnit.SECONDS).toString()
 	val arrival2RemainingStops = nstnOrd2.toInt()
+
+	companion object {
+		fun parseDigitOnlyRepresentation(literal: String?) = literal?.let {
+			if (it.length == 10) {
+				"${it}0000"
+			} else {
+				it
+			}
+		}?.let {
+			DateTimeSerializer.digitOnlyFormatter.parse(it)
+		}
+	}
 }

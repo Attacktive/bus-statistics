@@ -1,5 +1,7 @@
 package xyz.attacktive.busstatistics.statistics.domain
 
+import xyz.attacktive.busstatistics.configuration.DateTimeSerializer
+
 data class BusPositionResponse(
 	/**
 	 * 구간순번
@@ -80,4 +82,6 @@ data class BusPositionResponse(
 	 * 만차여부(0 : 만차아님, 1: 만차)
 	 */
 	val isFullFlag: String
-)
+) {
+	val dataTmDateTime = DateTimeSerializer.digitOnlyFormatter.parse(dataTm)
+}

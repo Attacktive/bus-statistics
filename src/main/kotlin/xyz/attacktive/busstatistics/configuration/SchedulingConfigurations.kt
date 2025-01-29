@@ -1,9 +1,9 @@
 package xyz.attacktive.busstatistics.configuration
 
+import org.quartz.CronScheduleBuilder
 import org.quartz.JobBuilder
 import org.quartz.JobKey
 import org.quartz.Scheduler
-import org.quartz.SimpleScheduleBuilder
 import org.quartz.TriggerBuilder
 import org.quartz.TriggerKey
 import org.springframework.context.annotation.Bean
@@ -14,7 +14,7 @@ import xyz.attacktive.busstatistics.statistics.adapter.StatisticsJob
 @Configuration
 class SchedulingConfigurations {
 	@Bean
-	fun scheduler(schedulerFactoryBean: SchedulerFactoryBean): Scheduler {
+	fun scheduler(schedulerFactoryBean: SchedulerFactoryBean, appConfigurationProperties: AppConfigurationProperties): Scheduler {
 		val jobDetail = JobBuilder.newJob()
 			.ofType(StatisticsJob::class.java)
 			.storeDurably()
@@ -26,11 +26,7 @@ class SchedulingConfigurations {
 			.forJob(jobDetail)
 			.withIdentity(TriggerKey.triggerKey("Qrtz_Trigger_Detail"))
 			.withDescription("Sample Trigger")
-			.withSchedule(
-				SimpleScheduleBuilder.simpleSchedule()
-					.withIntervalInMinutes(5)
-					.repeatForever()
-			)
+			.withSchedule(CronScheduleBuilder.cronSchedule(appConfigurationProperties.cronExpression))
 			.build()
 
 		schedulerFactoryBean.scheduler.scheduleJob(jobDetail, trigger)
