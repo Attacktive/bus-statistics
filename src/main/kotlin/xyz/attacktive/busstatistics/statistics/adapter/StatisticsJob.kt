@@ -33,7 +33,7 @@ class StatisticsJob(private val appConfigurationProperties: AppConfigurationProp
 			.let { it.first().toInt() to it.last().toInt() }
 
 		val busPositions = statisticsService.getBusPositions(BusPositionRequest(serviceKey, busRouteId, beginningStationOrdinal, endingStationOrdinal))
-		val stationSequence = station.seq.toInt()
+		val stationSequence = stations.last().seq.toInt()
 		val busArrivals = statisticsService.getBusArrivals(BusArrivalRequest(serviceKey, stationId, busRouteId, stationSequence))
 
 		val now = LocalDateTime.now()
@@ -41,8 +41,8 @@ class StatisticsJob(private val appConfigurationProperties: AppConfigurationProp
 		transaction {
 			SchemaUtils.create(BusPositionTable, BusArrivalTable)
 
-			busPositions.forEach { position -> BusPositionTable.insertPosition(busRouteId, position, now) }
-			busArrivals.forEach { arrival -> BusArrivalTable.insertArrival(busRouteId, stationId, stationSequence, arrival, now) }
+			busPositions.forEach { BusPositionTable.insertPosition(busRouteId, it, now) }
+			busArrivals.forEach { BusArrivalTable.insertArrival(busRouteId, stationId, stationSequence, it, now) }
 		}
 	}
 }
