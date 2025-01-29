@@ -9,7 +9,7 @@ import org.quartz.TriggerKey
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.quartz.SchedulerFactoryBean
-import xyz.attacktive.busstatistics.job.StatisticsJob
+import xyz.attacktive.busstatistics.statistics.adapter.StatisticsJob
 
 @Configuration
 class SchedulingConfigurations {

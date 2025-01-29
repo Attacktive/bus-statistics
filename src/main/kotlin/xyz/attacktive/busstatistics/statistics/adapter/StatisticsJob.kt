@@ -1,4 +1,4 @@
-package xyz.attacktive.busstatistics.job
+package xyz.attacktive.busstatistics.statistics.adapter
 
 import java.time.LocalDateTime
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -7,7 +7,6 @@ import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.springframework.stereotype.Component
 import xyz.attacktive.busstatistics.configuration.AppConfigurationProperties
-import xyz.attacktive.busstatistics.statistics.adapter.StatisticsService
 import xyz.attacktive.busstatistics.statistics.domain.BusArrivalRequest
 import xyz.attacktive.busstatistics.statistics.adapter.table.BusArrivalTable
 import xyz.attacktive.busstatistics.statistics.domain.BusPositionRequest
