@@ -52,8 +52,8 @@ class StatisticsJob(private val appConfigurationProperties: AppConfigurationProp
 
 			newBusses = BusArrivalTable.select(BusArrivalTable.vehId1, BusArrivalTable.exps1, BusArrivalTable.mkTm)
 				.where {
-					(BusArrivalTable.vehId1 notInSubQuery (ActualArrivalTable.select(ActualArrivalTable.vehicleId))) and
-						(BusArrivalTable.mkTm greater (LocalDateTime.now().minusHours(1)))
+					BusArrivalTable.vehId1 notInSubQuery ActualArrivalTable.select(ActualArrivalTable.vehicleId) and
+						(BusArrivalTable.mkTm greater LocalDateTime.now().minusHours(1))
 				}
 
 			newBusses.forEach {
