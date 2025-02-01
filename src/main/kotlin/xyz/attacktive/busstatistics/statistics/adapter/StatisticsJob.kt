@@ -1,6 +1,7 @@
 package xyz.attacktive.busstatistics.statistics.adapter
 
 import java.time.LocalDateTime
+import org.jetbrains.exposed.sql.Query
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -45,22 +46,27 @@ class StatisticsJob(private val appConfigurationProperties: AppConfigurationProp
 			busArrivals.forEach { BusArrivalTable.insertArrival(busRouteId, stationId, stationSequence, it) }
 		}
 
+		var newBusses: Query
 		transaction {
 			SchemaUtils.create(ActualArrivalTable)
 
-			BusArrivalTable.select(BusArrivalTable.vehId1, BusArrivalTable.exps1, BusArrivalTable.mkTm)
+			newBusses = BusArrivalTable.select(BusArrivalTable.vehId1, BusArrivalTable.exps1, BusArrivalTable.mkTm)
 				.where {
 					(BusArrivalTable.vehId1 notInSubQuery (ActualArrivalTable.select(ActualArrivalTable.vehicleId))) and
 						(BusArrivalTable.mkTm greater (LocalDateTime.now().minusHours(1)))
-				}.forEach {
-					val remainingSeconds = it[BusArrivalTable.exps1].toLong()
-					val retrievalDateTime = it[BusArrivalTable.mkTm]
-
-					val estimatedArrivalDateTime = retrievalDateTime.plusSeconds(remainingSeconds)
-
-					ActualArrivalTable.insertActualArrival(it[BusArrivalTable.vehId1], estimatedArrivalDateTime)
 				}
 
+			newBusses.forEach {
+				val remainingSeconds = it[BusArrivalTable.exps1].toLong()
+				val retrievalDateTime = it[BusArrivalTable.mkTm]
+
+				val estimatedArrivalDateTime = retrievalDateTime.plusSeconds(remainingSeconds)
+
+				ActualArrivalTable.insertActualArrival(it[BusArrivalTable.vehId1], estimatedArrivalDateTime)
+			}
+		}
+
+		for (busPosition in busPositions) {
 			// TODO: update actual arrival date-time
 		}
 	}
