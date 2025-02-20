@@ -10,9 +10,7 @@ import org.springframework.web.util.UriBuilder
  * @property endOrd 종료 정류소 순번
  */
 data class BusPositionRequest(private val serviceKey: String, private val busRouteId: String, private val startOrd: Int, private val endOrd: Int): ApiRequest {
-	override fun serviceKey(): String {
-		return serviceKey
-	}
+	override fun serviceKey() = serviceKey
 
 	override fun addQueryParameters(uriBuilder: UriBuilder) = uriBuilder
 		.queryParam("resultType", resultType())
