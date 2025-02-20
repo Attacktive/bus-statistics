@@ -1,8 +1,8 @@
 package xyz.attacktive.busstatistics.statistics.adapter
 
 import java.time.LocalDateTime
-import org.jetbrains.exposed.sql.Query
-import org.jetbrains.exposed.sql.SchemaUtils
+import kotlin.math.absoluteValue
+import kotlinx.datetime.toJavaLocalDateTime
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.quartz.Job
@@ -40,34 +40,51 @@ class StatisticsJob(private val appConfigurationProperties: AppConfigurationProp
 		val busArrivals = statisticsService.getBusArrivals(BusArrivalRequest(serviceKey, stationId, busRouteId, stationSequence))
 
 		transaction {
-			SchemaUtils.create(BusPositionTable, BusArrivalTable)
-
 			busPositions.forEach { BusPositionTable.insertPosition(busRouteId, it) }
 			busArrivals.forEach { BusArrivalTable.insertArrival(busRouteId, stationId, stationSequence, it) }
 		}
 
-		var newBusses: Query
-		transaction {
-			SchemaUtils.create(ActualArrivalTable)
-
-			newBusses = BusArrivalTable.select(BusArrivalTable.vehId1, BusArrivalTable.exps1, BusArrivalTable.mkTm)
+		val insertedIds = transaction {
+			val newBusses = BusArrivalTable
+				.select(BusArrivalTable.vehId1, BusArrivalTable.exps1, BusArrivalTable.mkTm)
 				.where {
 					BusArrivalTable.vehId1 notInSubQuery ActualArrivalTable.select(ActualArrivalTable.vehicleId) and
 						(BusArrivalTable.mkTm greater LocalDateTime.now().minusHours(1))
 				}
 
-			newBusses.forEach {
+			newBusses.map {
 				val remainingSeconds = it[BusArrivalTable.exps1].toLong()
 				val retrievalDateTime = it[BusArrivalTable.mkTm]
 
 				val estimatedArrivalDateTime = retrievalDateTime.plusSeconds(remainingSeconds)
 
-				ActualArrivalTable.insertActualArrival(it[BusArrivalTable.vehId1], estimatedArrivalDateTime)
+				val insertStatement = ActualArrivalTable.insertActualArrival(it[BusArrivalTable.vehId1], estimatedArrivalDateTime, retrievalDateTime)
+
+				insertStatement[ActualArrivalTable.id].absoluteValue
 			}
 		}
 
-		for (busPosition in busPositions) {
-			// TODO: update actual arrival date-time
+		for (busArrival in busArrivals) {
+			val vehicleId = busArrival.vehId1
+			val busPosition = busPositions.find { it.vehId == vehicleId }
+			if (busPosition == null) {
+				throw RuntimeException("The first arriving vehicle $vehicleId does not exist.")
+			}
+
+			transaction {
+				val record = ActualArrivalTable
+					.select(ActualArrivalTable.id, ActualArrivalTable.vehicleId, ActualArrivalTable.estimatedAt)
+					.where { ActualArrivalTable.id notInList insertedIds }
+					.find { it[ActualArrivalTable.vehicleId] == vehicleId }
+
+				if (record != null) {
+					val estimatedArrivalDateTime = busArrival.mkTmDateTime
+						.toJavaLocalDateTime()
+						.plusSeconds(busArrival.exps1.toLong())
+
+					ActualArrivalTable.updateActualArrival(record[ActualArrivalTable.id], estimatedArrivalDateTime, record[ActualArrivalTable.estimatedAt])
+				}
+			}
 		}
 	}
 }
