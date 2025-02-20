@@ -8,9 +8,7 @@ import org.springframework.web.util.UriBuilder
  * @property busRouteId 노선 ID
  */
 data class BusRouteRequest(private val serviceKey: String, private val busRouteId: String): ApiRequest {
-	override fun serviceKey(): String {
-		return serviceKey
-	}
+	override fun serviceKey() = serviceKey
 
 	override fun addQueryParameters(uriBuilder: UriBuilder) = uriBuilder
 		.queryParam("resultType", resultType())

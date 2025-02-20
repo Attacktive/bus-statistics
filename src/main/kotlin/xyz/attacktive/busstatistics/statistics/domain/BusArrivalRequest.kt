@@ -15,9 +15,7 @@ data class BusArrivalRequest(
 	private val busRouteId: String,
 	private val ord: Int
 ): ApiRequest {
-	override fun serviceKey(): String {
-		return serviceKey
-	}
+	override fun serviceKey() = serviceKey
 
 	override fun addQueryParameters(uriBuilder: UriBuilder) = uriBuilder
 		.queryParam("resultType", resultType())
