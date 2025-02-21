@@ -10,8 +10,9 @@ import org.springframework.web.util.UriBuilder
 data class BusRouteRequest(private val serviceKey: String, private val busRouteId: String): ApiRequest {
 	override fun serviceKey() = serviceKey
 
-	override fun addQueryParameters(uriBuilder: UriBuilder) = uriBuilder
+	override fun buildUri(uriBuilder: UriBuilder) = uriBuilder.path("/busRouteInfo/getStaionByRoute")
 		.queryParam("resultType", resultType())
 		.queryParam("serviceKey", serviceKey)
 		.queryParam("busRouteId", busRouteId)
+		.build()
 }

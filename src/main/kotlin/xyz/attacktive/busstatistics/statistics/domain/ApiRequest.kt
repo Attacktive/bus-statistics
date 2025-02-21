@@ -1,5 +1,6 @@
 package xyz.attacktive.busstatistics.statistics.domain
 
+import java.net.URI
 import org.springframework.web.util.UriBuilder
 
 interface ApiRequest {
@@ -7,5 +8,5 @@ interface ApiRequest {
 
 	fun serviceKey(): String
 
-	fun addQueryParameters(uriBuilder: UriBuilder): UriBuilder
+	fun buildUri(uriBuilder: UriBuilder): URI
 }

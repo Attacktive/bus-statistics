@@ -12,10 +12,11 @@ import org.springframework.web.util.UriBuilder
 data class BusPositionRequest(private val serviceKey: String, private val busRouteId: String, private val startOrd: Int, private val endOrd: Int): ApiRequest {
 	override fun serviceKey() = serviceKey
 
-	override fun addQueryParameters(uriBuilder: UriBuilder) = uriBuilder
+	override fun buildUri(uriBuilder: UriBuilder) = uriBuilder.path("/buspos/getBusPosByRouteSt")
 		.queryParam("resultType", resultType())
 		.queryParam("serviceKey", serviceKey)
 		.queryParam("busRouteId", busRouteId)
 		.queryParam("startOrd", startOrd)
 		.queryParam("endOrd", endOrd)
+		.build()
 }

@@ -17,10 +17,11 @@ data class BusArrivalRequest(
 ): ApiRequest {
 	override fun serviceKey() = serviceKey
 
-	override fun addQueryParameters(uriBuilder: UriBuilder) = uriBuilder
+	override fun buildUri(uriBuilder: UriBuilder) = uriBuilder.path("/arrive/getArrInfoByRoute")
 		.queryParam("resultType", resultType())
 		.queryParam("serviceKey", serviceKey)
 		.queryParam("stId", stId)
 		.queryParam("busRouteId", busRouteId)
 		.queryParam("ord", ord)
+		.build()
 }
