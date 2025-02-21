@@ -20,7 +20,7 @@ class StatisticsService(private val restClient: RestClient): StatisticsUseCase {
 	}
 
 	override fun getBusRoute(busRouteRequest: BusRouteRequest): BusRouteResponse {
-		logger.info { "trying to request /busRouteInfo/getStaionByRoute with $busRouteRequest" }
+		logger.debug { "trying to request /busRouteInfo/getStaionByRoute with $busRouteRequest" }
 
 		val stations = (
 			restClient.get()
@@ -38,7 +38,7 @@ class StatisticsService(private val restClient: RestClient): StatisticsUseCase {
 	}
 
 	override fun getBusPositions(busPositionRequest: BusPositionRequest): List<BusPositionResponse> {
-		logger.info { "trying to request /buspos/getBusPosByRouteSt with $busPositionRequest" }
+		logger.debug { "trying to request /buspos/getBusPosByRouteSt with $busPositionRequest" }
 
 		return (
 			restClient.get()
@@ -55,7 +55,7 @@ class StatisticsService(private val restClient: RestClient): StatisticsUseCase {
 	}
 
 	override fun getBusArrivals(busArrivalRequest: BusArrivalRequest): List<BusArrivalResponse> {
-		logger.info { "trying to request /arrive/getArrInfoByRoute with $busArrivalRequest" }
+		logger.debug { "trying to request /arrive/getArrInfoByRoute with $busArrivalRequest" }
 
 		val response = restClient.get()
 			.uri {
