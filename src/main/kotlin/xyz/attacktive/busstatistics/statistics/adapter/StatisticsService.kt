@@ -24,11 +24,7 @@ class StatisticsService(private val restClient: RestClient): StatisticsUseCase {
 
 		val stations = (
 			restClient.get()
-				.uri {
-					it.path("/busRouteInfo/getStaionByRoute")
-					busRouteRequest.addQueryParameters(it)
-					it.build()
-				}
+				.uri { busRouteRequest.buildUri(it) }
 				.retrieve()
 				.body(object: ParameterizedTypeReference<ApiResponse<BusRouteResponse.BusStation>>() {})
 				?: throw IllegalStateException("Failed to get bus route")
@@ -42,11 +38,7 @@ class StatisticsService(private val restClient: RestClient): StatisticsUseCase {
 
 		return (
 			restClient.get()
-				.uri {
-					it.path("/buspos/getBusPosByRouteSt")
-					busPositionRequest.addQueryParameters(it)
-					it.build()
-				}
+				.uri { busPositionRequest.buildUri(it) }
 				.retrieve()
 				.body(object: ParameterizedTypeReference<ApiResponse<BusPositionResponse>>() {})
 				?: throw IllegalStateException("Failed to get bus positions")
@@ -58,11 +50,7 @@ class StatisticsService(private val restClient: RestClient): StatisticsUseCase {
 		logger.debug { "trying to request /arrive/getArrInfoByRoute with $busArrivalRequest" }
 
 		val response = restClient.get()
-			.uri {
-				it.path("/arrive/getArrInfoByRoute")
-				busArrivalRequest.addQueryParameters(it)
-				it.build()
-			}
+			.uri { busArrivalRequest.buildUri(it) }
 			.retrieve()
 			.body(object: ParameterizedTypeReference<ApiResponse<BusArrivalResponse>>() {})
 			?: throw IllegalStateException("Failed to get bus arrivals")
