@@ -68,7 +68,7 @@ class StatisticsJob(private val appConfigurationProperties: AppConfigurationProp
 			val vehicleId = busArrival.vehId1
 			val busPosition = busPositions.find { it.vehId == vehicleId }
 			if (busPosition == null) {
-				throw RuntimeException("The first arriving vehicle $vehicleId does not exist.")
+				throw IllegalStateException("The first arriving vehicle $vehicleId does not exist.")
 			}
 
 			transaction {
