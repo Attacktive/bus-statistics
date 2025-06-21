@@ -25,16 +25,18 @@ repositories {
 }
 
 dependencies {
+	val exposedVersion = "0.59.0"
+
 	implementation("org.springframework.boot", "spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot", "spring-boot-starter-web")
 	implementation("org.springframework.boot", "spring-boot-starter-quartz")
 	implementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin", "kotlin-reflect")
-	implementation("org.jetbrains.exposed", "exposed-core", "0.59.0")
-	implementation("org.jetbrains.exposed", "exposed-dao", "0.59.0")
-	implementation("org.jetbrains.exposed", "exposed-java-time", "0.59.0")
-	implementation("org.jetbrains.exposed", "exposed-jdbc", "0.59.0")
-	implementation("org.jetbrains.exposed", "exposed-spring-boot-starter", "0.59.0")
+	implementation("org.jetbrains.exposed", "exposed-core", exposedVersion)
+	implementation("org.jetbrains.exposed", "exposed-dao", exposedVersion)
+	implementation("org.jetbrains.exposed", "exposed-java-time", exposedVersion)
+	implementation("org.jetbrains.exposed", "exposed-jdbc", exposedVersion)
+	implementation("org.jetbrains.exposed", "exposed-spring-boot-starter", exposedVersion)
 	implementation("org.jetbrains.kotlinx", "kotlinx-datetime-jvm", "0.6.1")
 	implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json-jvm", "1.8.0")
 	runtimeOnly("org.postgresql", "postgresql")
