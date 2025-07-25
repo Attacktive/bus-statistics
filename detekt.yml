@@ -5,7 +5,9 @@ config:
 complexity:
   StringLiteralDuplication:
     active: true
-    excludes: '*.gradle*'
+    excludes:
+      - '*.gradle'
+      - '*.gradle.kts'
 
 style:
   UnnecessaryParentheses:
