@@ -1,0 +1,12 @@
+config:
+  validation: true
+  warningsAsErrors: false
+
+complexity:
+  StringLiteralDuplication:
+    active: true
+    excludes: '*.gradle*'
+
+style:
+  UnnecessaryParentheses:
+    allowForUnclearPrecedence: true
