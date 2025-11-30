@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: 'org.h2.Driver'
+    url: 'jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE'
+    username: 'sa'
+    password: ''
+  jpa:
+    hibernate:
+      ddl-auto: 'create-drop'
+
+app:
+  service-key: 'test-service-key'
+  bus-route-id: 'test-bus-route'
+  st-id: 'test-st-id'
+  schedule-cron-expression: '0 * 8,9 * * ?'
