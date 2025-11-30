@@ -1,7 +1,7 @@
 plugins {
 	kotlin("jvm") version "2.2.21"
 	kotlin("plugin.spring") version "2.2.21"
-	id("org.springframework.boot") version "4.0.0"
+	id("org.springframework.boot") version "3.4.2"
 	id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-	val exposedVersion = "0.59.0"
+	val exposedVersion = "0.61.0"
 
 	implementation("org.springframework.boot", "spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot", "spring-boot-starter-web")
@@ -45,6 +45,7 @@ dependencies {
 	testImplementation("org.springframework.boot", "spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin", "kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform", "junit-platform-launcher")
+	testRuntimeOnly("com.h2database", "h2")
 }
 
 kotlin {
