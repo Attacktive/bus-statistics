@@ -1,9 +1,9 @@
 package xyz.attacktive.busstatistics.statistics.adapter.table
 
 import kotlinx.datetime.toJavaLocalDateTime
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.javatime.datetime
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.javatime.datetime
+import org.jetbrains.exposed.v1.jdbc.insert
 import xyz.attacktive.busstatistics.statistics.domain.BusArrivalResponse
 
 object BusArrivalTable: Table("bus_arrival") {

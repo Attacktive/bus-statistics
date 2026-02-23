@@ -3,8 +3,12 @@ package xyz.attacktive.busstatistics.statistics.adapter
 import java.time.LocalDateTime
 import kotlin.math.absoluteValue
 import kotlinx.datetime.toJavaLocalDateTime
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.v1.core.and
+import org.jetbrains.exposed.v1.core.greater
+import org.jetbrains.exposed.v1.core.notInList
+import org.jetbrains.exposed.v1.core.notInSubQuery
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.springframework.stereotype.Component
