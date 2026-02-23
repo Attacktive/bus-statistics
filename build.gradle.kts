@@ -40,7 +40,6 @@ dependencies {
 	implementation("org.jetbrains.exposed", "exposed-jdbc", exposedVersion)
 	implementation("org.jetbrains.exposed", "exposed-spring-boot4-starter", exposedVersion)
 	implementation("org.jetbrains.kotlinx", "kotlinx-datetime-jvm", "0.7.1")
-	implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json-jvm", "1.10.0")
 	runtimeOnly("org.postgresql", "postgresql")
 	implementation("io.github.oshai", "kotlin-logging-jvm", "7.0.3")
 	annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")

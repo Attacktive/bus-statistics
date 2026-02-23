@@ -2,16 +2,8 @@ package xyz.attacktive.busstatistics.configuration
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format.char
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
-object DateTimeSerializer: KSerializer<LocalDateTime> {
-	override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(LocalDateTime::class.qualifiedName!!, PrimitiveKind.STRING)
-
+object DateTimeSerializer {
 	val formatter = LocalDateTime.Format {
 		year()
 		char('-')
@@ -50,8 +42,4 @@ object DateTimeSerializer: KSerializer<LocalDateTime> {
 		char('.')
 		secondFraction(1)
 	}
-
-	override fun serialize(encoder: Encoder, value: LocalDateTime) = encoder.encodeString(formatter.format(value))
-
-	override fun deserialize(decoder: Decoder) = throw NotImplementedError("It's not supposed to be invoked.")
 }
