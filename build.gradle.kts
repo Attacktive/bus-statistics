@@ -12,7 +12,7 @@ version = "0.0.1"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(25)
 	}
 }
 
@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-	val exposedVersion = "0.61.0"
+	val exposedVersion = "1.0.0"
 
 	implementation("org.springframework.boot", "spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot", "spring-boot-starter-web")
@@ -38,9 +38,8 @@ dependencies {
 	implementation("org.jetbrains.exposed", "exposed-dao", exposedVersion)
 	implementation("org.jetbrains.exposed", "exposed-java-time", exposedVersion)
 	implementation("org.jetbrains.exposed", "exposed-jdbc", exposedVersion)
-	implementation("org.jetbrains.exposed", "exposed-spring-boot-starter", exposedVersion)
-	implementation("org.jetbrains.kotlinx", "kotlinx-datetime-jvm", "0.6.1")
-	implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json-jvm", "1.8.0")
+	implementation("org.jetbrains.exposed", "exposed-spring-boot4-starter", exposedVersion)
+	implementation("org.jetbrains.kotlinx", "kotlinx-datetime-jvm", "0.7.1")
 	runtimeOnly("org.postgresql", "postgresql")
 	implementation("io.github.oshai", "kotlin-logging-jvm", "7.0.3")
 	annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
