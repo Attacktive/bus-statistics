@@ -18,7 +18,7 @@ jobs:
           distribution: 'temurin'
           architecture: 'x64'
       - name: 'Setup Gradle'
-        uses: 'gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2'
+        uses: 'gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e'
       - name: 'Build with Gradle'
         run: './gradlew compileKotlin compileTestKotlin'
       - name: 'Test with Gradle'
